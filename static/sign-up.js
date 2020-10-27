@@ -1,4 +1,4 @@
-
+let isUsernameValid = false;
 document.getElementById('photo').addEventListener('change', function (e) {
     let fileName = e.target.files[0].name;
     let nextSibling = e.target.nextElementSibling
@@ -43,9 +43,8 @@ function isValidUsername(referenceNode, username) {
         let responseValue = JSON.parse(response)[username]
         if (responseValue === 'taken') {
             addMessage(referenceNode, "validation-message", "Nazwa użytkownika " + username + " jest zajęta")
-            return false;
         }
-        return true;
+        isUsernameValid = true;
     })
 }
 
@@ -137,11 +136,7 @@ function validateForm(event) {
     let isNameValid = isValidName(firstname, firstname.id);
     let isSurnameValid = isValidName(surname, surname.id);
     let isPasswordValid = isValidPassword();
-    let isUsernameValid
-    isValidUsername(username, username.value).then(res => {
-        console.log('is username valid: '+ res)
-        isUsernameValid = res
-    });
+    isValidUsername(username, username.value)
     let isFileValid = isValidFile(fileInput);
     if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
         console.log('isNameValid'+ isNameValid)
