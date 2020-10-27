@@ -38,7 +38,7 @@ document.getElementById('submit-button').addEventListener('click', function (e) 
 function isValidUsername(referenceNode, username) {
     removeMessages([referenceNode.id]);
     return new Promise(resolve => {
-        if (username !== '' && username.length > 3) {
+        if (username !== '' && username.length >= 3) {
             httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username,
                 function (response) {
                     let responseValue = JSON.parse(response)[username]
