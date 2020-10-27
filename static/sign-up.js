@@ -1,4 +1,3 @@
-
 document.getElementById('photo').addEventListener('change', function (e) {
     let fileName = e.target.files[0].name;
     let nextSibling = e.target.nextElementSibling
@@ -17,7 +16,7 @@ document.getElementById('firstname').addEventListener('change', function (e) {
 document.getElementById('login').addEventListener('keydown', function (e) {
     if (e.keyCode === 8) {
         let username = e.target.value.slice(0, -1);
-        if(username !== ''){
+        if (username !== '') {
             isValidUsername(e.target, username)
         }
     }
@@ -41,13 +40,13 @@ function isValidUsername(referenceNode, username) {
     removeMessages([referenceNode.id]);
     return new Promise(resolve => {
         httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username, function (response) {
-        let responseValue = JSON.parse(response)[username]
-        if (responseValue === 'taken') {
-            addMessage(referenceNode, "validation-message", "Nazwa użytkownika " + username + " jest zajęta")
-            resolve("invalid")
-        }
-        resolve("valid")
-    })
+            let responseValue = JSON.parse(response)[username]
+            if (responseValue === 'taken') {
+                addMessage(referenceNode, "validation-message", "Nazwa użytkownika " + username + " jest zajęta")
+                resolve("invalid")
+            }
+            resolve("valid")
+        })
     })
 
 }
@@ -132,23 +131,30 @@ function isValidPassword() {
 }
 
 function validateForm(event) {
-    event.preventDefault();
+    let username = document.getElementById("login");
     let firstname = document.getElementById("firstname");
     let surname = document.getElementById("lastname");
     let fileInput = document.getElementById("photo");
-    let username = document.getElementById("login");
-    isValidUsername(username, username.value). then(result => console.log('result of isvalidusername:'+ result))
     let isNameValid = isValidName(firstname, firstname.id);
     let isSurnameValid = isValidName(surname, surname.id);
     let isPasswordValid = isValidPassword();
     let isFileValid = isValidFile(fileInput);
-    if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
-        console.log('isNameValid'+ isNameValid)
-        console.log('isLastNameValid'+ isSurnameValid)
-        console.log('isPasswordValid'+ isPasswordValid)
-        console.log('isUsernameValid'+ isUsernameValid)
-        console.log('isFileValid'+ isFileValid)
-    }
+    isValidUsername(username, username.value)
+        .then(result => {
+            let isUsernameValid = result === 'valid';
+            if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
+                console.log('isNameValid' + isNameValid)
+                console.log('isLastNameValid' + isSurnameValid)
+                console.log('isPasswordValid' + isPasswordValid)
+                console.log('isUsernameValid' + isUsernameValid)
+                console.log('isFileValid' + isFileValid)
+                event.preventDefault();
+            }
+        })
 }
+
 //TODO obsluga tego ze login jest pusty
-//TODO
+//TODO username musi byc wypelniony
+// TODO imie i nazwisko z duzej ltery
+// TODO strona glowna
+// TODO sprawdzic czy plik jest wymagany
