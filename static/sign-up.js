@@ -16,7 +16,7 @@ document.getElementById('firstname').addEventListener('change', function (e){
 
 document.getElementById('login').addEventListener('change', function (e){
   httpGetAsync( 'https://infinite-hamlet-29399.herokuapp.com/check/' + e.target.value, function(response) {
-    console.log(response[e.target.value])
+    console.log(JSON.parse(response)[e.target.value])
   })
 })
 
