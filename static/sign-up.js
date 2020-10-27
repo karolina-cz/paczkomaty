@@ -33,7 +33,7 @@ document.getElementById('repeated-password').addEventListener('change', function
 })
 
 document.getElementById('submit-button').addEventListener('click', function (e) {
-    validateForm(event);
+    validateForm(e);
 })
 
 
@@ -54,9 +54,7 @@ function isValidUsername(referenceNode, username) {
             addMessage(referenceNode, REQUIRED_FIELD_MESSAGE)
             resolve("invalid")
         }
-
     })
-
 }
 
 function httpGetAsync(theUrl, callback) {
@@ -92,12 +90,8 @@ function isValidName(referenceNode, referenceNodeId) {
         addMessage(referenceNode, REQUIRED_FIELD_MESSAGE)
         return false;
     }
-    if (!containsLettersOnly(name)) {
-        addMessage(referenceNode, "To pole musi zawierać tylko litery")
-        return false;
-    }
-    if (!isFirstCharUpperLetter(name)) {
-        addMessage(referenceNode, "To pole musi zaczynać się od dużej litery")
+    if (!containsLettersOnly(name.substring(1)) || !isFirstCharUpperLetter(name) || name.length < 2) {
+        addMessage(referenceNode, "To pole musi zawierać tylko litery i zaczynac się od wielkiej litery")
         return false;
     }
     return true;
@@ -113,7 +107,7 @@ function removeMessages(referenceNodesIds) {
 }
 
 function containsLettersOnly(text) {
-    return !/[^a-ząćęłńóśźżA-ZĄĆĘŁŃÓŚŹŻ]/.test(text);
+    return !/[^a-ząćęłńóśźż]/.test(text);
 }
 
 function isFirstCharUpperLetter(text) {
@@ -144,6 +138,9 @@ function isValidPassword() {
     } else if (password.value !== repeatedPassword.value) {
         addMessage(repeatedPassword, "Hasła muszą być takie same");
         return false;
+    } else if (password.value.length < 8) {
+        addMessage(repeatedPassword, "Hasło musi mieć przynajmniej 8 znaków");
+        return false;
     }
     return true;
 }
@@ -166,6 +163,3 @@ function validateForm(event) {
             }
         })
 }
-
-// todo warunki na haslo
-// todo obejrzec czy post ma przenosic na strone
