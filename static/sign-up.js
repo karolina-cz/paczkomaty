@@ -38,7 +38,7 @@ document.getElementById('submit-button').addEventListener('click', function (e) 
 function isValidUsername(referenceNode, username) {
     removeMessages([referenceNode.id]);
     return new Promise(resolve => {
-        if (username !== '') {
+        if (username !== '' && username.length > 3) {
             httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username,
                 function (response) {
                     let responseValue = JSON.parse(response)[username]
@@ -49,6 +49,9 @@ function isValidUsername(referenceNode, username) {
                         resolve("valid")
                     }
                 })
+        } else if(username.length < 3 && username !== ''){
+            addMessage(referenceNode, "Nazwa użytkownika powinna zaiwerać przynajmniej 3 znaki")
+            resolve("invalid")
         } else {
             addMessage(referenceNode, REQUIRED_FIELD_MESSAGE)
             resolve("invalid")
