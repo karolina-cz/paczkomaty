@@ -33,7 +33,7 @@ document.getElementById('repeated-password').addEventListener('change', function
 })
 
 document.getElementById('submit-button').addEventListener('click', function (e) {
-    validateForm();
+    validateForm(event);
 })
 
 
@@ -128,7 +128,8 @@ function isValidPassword() {
     return true;
 }
 
-function validateForm() {
+function validateForm(event) {
+    event.preventDefault();
     let firstname = document.getElementById("firstname");
     let surname = document.getElementById("lastname");
     let fileInput = document.getElementById("photo");
@@ -139,7 +140,7 @@ function validateForm() {
     let isUsernameValid
     isValidUsername(username, username.value).then(res => {
         console.log('is username valid: '+ res)
-        username = res
+        isUsernameValid = res
     });
     let isFileValid = isValidFile(fileInput);
     if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
@@ -148,6 +149,5 @@ function validateForm() {
         console.log('isPasswordValid'+ isPasswordValid)
         console.log('isUsernameValid'+ isUsernameValid)
         console.log('isFileValid'+ isFileValid)
-        event.preventDefault();
     }
 }
