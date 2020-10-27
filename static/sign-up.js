@@ -139,7 +139,11 @@ function validateForm() {
     let isUsernameValid = isValidUsername(username, username.value);
     let isFileValid = isValidFile(fileInput);
     if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
-        console.log('something wrong')
+        console.log('isNameValid'+ isNameValid)
+        console.log('isLastNameValid'+ isSurnameValid)
+        console.log('isPasswordValid'+ isPasswordValid)
+        console.log('isUsernameValid'+ isUsernameValid)
+        console.log('isFileValid'+ isFileValid)
         event.preventDefault();
     }
 }
