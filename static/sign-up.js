@@ -39,14 +39,18 @@ document.getElementById('submit-button').addEventListener('click', function (e) 
 function isValidUsername(referenceNode, username) {
     removeMessages([referenceNode.id]);
     return new Promise(resolve => {
-        httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username, function (response) {
-            let responseValue = JSON.parse(response)[username]
-            if (responseValue === 'taken') {
-                addMessage(referenceNode, "validation-message", "Nazwa użytkownika " + username + " jest zajęta")
-                resolve("invalid")
-            }
-            resolve("valid")
-        })
+        if (username !== '') {
+            httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username, function (response) {
+                let responseValue = JSON.parse(response)[username]
+                if (responseValue === 'taken') {
+                    addMessage(referenceNode, "validation-message", "Nazwa użytkownika " + username + " jest zajęta")
+                    resolve("invalid")
+                }
+                resolve("valid")
+            })
+        }
+        addMessage(referenceNode, "validation-message", "To pole musi być wypełnione")
+        resolve("invalid")
     })
 
 }
@@ -131,6 +135,7 @@ function isValidPassword() {
 }
 
 function validateForm(event) {
+    event.preventDefault();
     let username = document.getElementById("login");
     let firstname = document.getElementById("firstname");
     let surname = document.getElementById("lastname");
@@ -142,13 +147,8 @@ function validateForm(event) {
     isValidUsername(username, username.value)
         .then(result => {
             let isUsernameValid = result === 'valid';
-            if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
-                console.log('isNameValid' + isNameValid)
-                console.log('isLastNameValid' + isSurnameValid)
-                console.log('isPasswordValid' + isPasswordValid)
-                console.log('isUsernameValid' + isUsernameValid)
-                console.log('isFileValid' + isFileValid)
-                event.preventDefault();
+            if (isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid) {
+                document.getElementById("register-form").submit()
             }
         })
 }
@@ -158,3 +158,4 @@ function validateForm(event) {
 // TODO imie i nazwisko z duzej ltery
 // TODO strona glowna
 // TODO sprawdzic czy plik jest wymagany
+// todo warunki na haslo
