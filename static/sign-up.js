@@ -55,7 +55,7 @@ function httpGetAsync(theUrl, callback) {
 }
 
 function isValidFile(referenceNode) {
-    removeMessages([referenceNode.id]);
+    removeMessages([referenceNode.parentNode.id]);
     if (referenceNode.files[0] != null) {
         let fileName = referenceNode.files[0].name;
         if (!(fileName.endsWith(".png") || fileName.endsWith(".jpg"))) {
