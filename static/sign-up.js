@@ -1,45 +1,39 @@
-let isFormValid = {
-    'firstname': false,
-    'lastname': false,
-    'login': false,
-    'password': false,
-    'photo': false
-}
+
 document.getElementById('photo').addEventListener('change', function (e) {
     let fileName = e.target.files[0].name;
     let nextSibling = e.target.nextElementSibling
     nextSibling.innerText = fileName
-    isFormValid['photo'] = isValidFile(e.target);
+    isValidFile(e.target)
 })
 
 document.getElementById('lastname').addEventListener('change', function (e) {
-    isFormValid['lastname']=isValidName(e.target, e.target.id)
+    isValidName(e.target, e.target.id)
 })
 
 document.getElementById('firstname').addEventListener('change', function (e) {
-    isFormValid['firstname'] = isValidName(e.target, e.target.id)
+    isValidName(e.target, e.target.id)
 })
 
 document.getElementById('login').addEventListener('keydown', function (e) {
     if (e.keyCode === 8) {
         let username = e.target.value.slice(0, -1);
         if(username !== ''){
-            isFormValid['login'] = isValidUsername(e.target, username)
+            isValidUsername(e.target, username)
         }
     }
 })
 
 document.getElementById('login').addEventListener('keypress', function (e) {
     let username = e.target.value + String.fromCharCode(e.keyCode)
-    isFormValid['login'] = isValidUsername(e.target, username)
+    isValidUsername(e.target, username)
 })
 
 document.getElementById('repeated-password').addEventListener('change', function (e) {
-    isFormValid['password'] = isValidPassword()
+    isValidPassword()
 })
 
 document.getElementById('submit-button').addEventListener('click', function (e) {
-    validateForm(e);
+    validateForm();
 })
 
 
@@ -134,9 +128,26 @@ function isValidPassword() {
     return true;
 }
 
-function validateForm(e) {
-    for(let keyValue in isFormValid){
-        console.log(keyValue + isFormValid[keyValue])
+function validateForm() {
+    let firstname = document.getElementById("firstname");
+    let surname = document.getElementById("lastname");
+    let fileInput = document.getElementById("photo");
+    let username = document.getElementById("login");
+    let isNameValid = isValidName(firstname, firstname.id);
+    let isSurnameValid = isValidName(surname, surname.id);
+    let isPasswordValid = isValidPassword();
+    let isUsernameValid
+    isValidUsername(username, username.value).then(res => {
+        console.log('is username valid: '+ res)
+        username = res
+    });
+    let isFileValid = isValidFile(fileInput);
+    if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
+        console.log('isNameValid'+ isNameValid)
+        console.log('isLastNameValid'+ isSurnameValid)
+        console.log('isPasswordValid'+ isPasswordValid)
+        console.log('isUsernameValid'+ isUsernameValid)
+        console.log('isFileValid'+ isFileValid)
+        event.preventDefault();
     }
-    e.preventDefault()
 }
