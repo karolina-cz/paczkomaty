@@ -1,0 +1,10 @@
+.form-wrapper{
+    margin: 50px;
+    padding: 50px;
+    border-width: thin;
+    border-style: solid;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
