@@ -1,3 +1,4 @@
+const REQUIRED_FIELD_MESSAGE = "To pole jest wymagane"
 document.getElementById('photo').addEventListener('change', function (e) {
     let fileName = e.target.files[0].name;
     let nextSibling = e.target.nextElementSibling
@@ -43,7 +44,7 @@ function isValidUsername(referenceNode, username) {
             httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username, function (response) {
                 let responseValue = JSON.parse(response)[username]
                 if (responseValue === 'taken') {
-                    addMessage(referenceNode, "validation-message", "Nazwa użytkownika " + username + " jest zajęta")
+                    addMessage(referenceNode, "Nazwa użytkownika " + username + " jest zajęta")
                     resolve("invalid")
                 }
                 else{
@@ -51,7 +52,7 @@ function isValidUsername(referenceNode, username) {
                 }
             })
         }else{
-            addMessage(referenceNode, "validation-message", "To pole musi być wypełnione")
+            addMessage(referenceNode, REQUIRED_FIELD_MESSAGE)
             resolve("invalid")
         }
 
@@ -70,28 +71,34 @@ function httpGetAsync(theUrl, callback) {
 }
 
 function isValidFile(referenceNode) {
-    removeMessages([referenceNode.parentNode.id]);
+    removeMessages([referenceNode.parentNode.parentNode.id]);
     if (referenceNode.files[0] != null) {
         let fileName = referenceNode.files[0].name;
         if (!(fileName.endsWith(".png") || fileName.endsWith(".jpg"))) {
-            addMessage(referenceNode.parentNode, "validation-message",
+            addMessage(referenceNode.parentNode.parentNode,
                 "Plik powienien być w formacie .png lub .jpg");
             return false;
         }
         return true;
     }
-    return true;
+    addMessage(referenceNode.parentNode.parentNode,
+                REQUIRED_FIELD_MESSAGE);
+    return false;
 }
 
 function isValidName(referenceNode, referenceNodeId) {
     removeMessages([referenceNodeId]);
     let name = referenceNode.value;
-    if (!containsLettersOnly(name)) {
-        addMessage(referenceNode, "validation-message", "To pole powinno zawierać tylko litery")
+    if (name === '') {
+        addMessage(referenceNode, REQUIRED_FIELD_MESSAGE)
         return false;
     }
-    if (name === '') {
-        addMessage(referenceNode, "validation-message", "To pole musi być uzupełnione")
+    if (!containsLettersOnly(name)) {
+        addMessage(referenceNode, "To pole musi zawierać tylko litery")
+        return false;
+    }
+    if(!isFirstCharUpperLetter(name)){
+        addMessage(referenceNode,  "To pole musi zaczynać się od dużej litery")
         return false;
     }
     return true;
@@ -107,15 +114,19 @@ function removeMessages(referenceNodesIds) {
 }
 
 function containsLettersOnly(text) {
-    return !/[^a-zA-Z]/.test(text);
+    return !/[^a-ząćęłńóśźżA-ZĄĆĘŁŃÓŚŹŻ]/.test(text);
 }
 
-function addMessage(referenceNode, messageType, message) {
+function isFirstCharUpperLetter(text) {
+    return /[A-ZĄĆĘŁŃÓŚŹŻ]/.test(text[0]);
+}
+
+function addMessage(referenceNode, message) {
     let tag = document.createElement("p");
     let text = document.createTextNode(message);
     tag.appendChild(text);
     tag.id = referenceNode.id + '-msg'
-    tag.classList.add(messageType);
+    tag.classList.add("validation-message");
     insertAfter(referenceNode, tag);
 }
 
@@ -128,11 +139,11 @@ function isValidPassword() {
     let repeatedPassword = document.getElementById("repeated-password");
     removeMessages([password.id, repeatedPassword.id]);
     if (password.value === '' && repeatedPassword.value === '') {
-        addMessage(password, "validation-message", "To pole musi być uzupełnione");
-        addMessage(repeatedPassword, "validation-message", "To pole musi być uzupełnione");
+        addMessage(password, REQUIRED_FIELD_MESSAGE);
+        addMessage(repeatedPassword, REQUIRED_FIELD_MESSAGE);
         return false;
     } else if (password.value !== repeatedPassword.value) {
-        addMessage(repeatedPassword, "validation-message", "Hasła muszą być takie same");
+        addMessage(repeatedPassword, "Hasła muszą być takie same");
         return false;
     }
     return true;
@@ -157,9 +168,8 @@ function validateForm(event) {
         })
 }
 
-//TODO obsluga tego ze login jest pusty
-//TODO username musi byc wypelniony
-// TODO imie i nazwisko z duzej ltery
+
 // TODO strona glowna
-// TODO plik jest wymagany
 // todo warunki na haslo
+// todo const dla to pole musi byc uzupelnione
+// todo obejrzec czy post ma przenosic na strone
