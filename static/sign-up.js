@@ -14,10 +14,11 @@ document.getElementById('firstname').addEventListener('change', function (e){
   isValidName(e.target, e.target.id)
 })
 
-document.getElementById('login').addEventListener('change', function (e){
+document.getElementById('login').addEventListener('keypress', function (e){
+  let username = e.target.value + String.fromCharCode(e.keyCode)
   removeMessages([e.target.id]);
-  httpGetAsync( 'https://infinite-hamlet-29399.herokuapp.com/check/' + e.target.value, function(response) {
-    let responseValue = JSON.parse(response)[e.target.value]
+  httpGetAsync( 'https://infinite-hamlet-29399.herokuapp.com/check/' + username, function(response) {
+    let responseValue = JSON.parse(response)[username]
     if(responseValue === 'taken'){
         addMessage(e.target,"validation-message", "Nazwa użytkownika " + e.target.value + " jest zajęta")
     }
