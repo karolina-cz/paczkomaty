@@ -46,11 +46,15 @@ function isValidUsername(referenceNode, username) {
                     addMessage(referenceNode, "validation-message", "Nazwa użytkownika " + username + " jest zajęta")
                     resolve("invalid")
                 }
-                resolve("valid")
+                else{
+                    resolve("valid")
+                }
             })
+        }else{
+            addMessage(referenceNode, "validation-message", "To pole musi być wypełnione")
+            resolve("invalid")
         }
-        addMessage(referenceNode, "validation-message", "To pole musi być wypełnione")
-        resolve("invalid")
+
     })
 
 }
@@ -157,5 +161,5 @@ function validateForm(event) {
 //TODO username musi byc wypelniony
 // TODO imie i nazwisko z duzej ltery
 // TODO strona glowna
-// TODO sprawdzic czy plik jest wymagany
+// TODO plik jest wymagany
 // todo warunki na haslo
