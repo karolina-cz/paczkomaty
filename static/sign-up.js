@@ -32,6 +32,11 @@ document.getElementById('repeated-password').addEventListener('change', function
     isValidPassword()
 })
 
+document.getElementById('submit-button').addEventListener('click', function (e) {
+    validateForm();
+})
+
+
 function isValidUsername(referenceNode, username) {
     removeMessages([referenceNode.id]);
     httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username, function (response) {
@@ -68,9 +73,6 @@ function isValidFile(referenceNode) {
     return true;
 }
 
-//TODO add generic function for deleting messages
-//TODO send form to address
-//TODO validate username
 function isValidName(referenceNode, referenceNodeId) {
     removeMessages([referenceNodeId]);
     let name = referenceNode.value;
@@ -128,15 +130,16 @@ function isValidPassword() {
 
 function validateForm() {
     let firstname = document.getElementById("firstname");
-    let surname = document.getElementById("surname");
-    let fileInput = document.getElementById("image");
+    let surname = document.getElementById("lastname");
+    let fileInput = document.getElementById("photo");
+    let username = document.getElementById("login");
     let isNameValid = isValidName(firstname, firstname.id);
     let isSurnameValid = isValidName(surname, surname.id);
     let isPasswordValid = isValidPassword();
-    let isUsernameValid = isValidUsername();
+    let isUsernameValid = isValidUsername(username, username.value);
     let isFileValid = isValidFile(fileInput);
     if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
-        console.log('something wrong');
+        console.log('something wrong')
         event.preventDefault();
     }
 }
