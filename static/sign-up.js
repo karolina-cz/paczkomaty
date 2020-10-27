@@ -1,4 +1,4 @@
-let isUsernameValid = false;
+
 document.getElementById('photo').addEventListener('change', function (e) {
     let fileName = e.target.files[0].name;
     let nextSibling = e.target.nextElementSibling
@@ -39,13 +39,17 @@ document.getElementById('submit-button').addEventListener('click', function (e) 
 
 function isValidUsername(referenceNode, username) {
     removeMessages([referenceNode.id]);
-    httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username, function (response) {
+    return new Promise(resolve => {
+        httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username, function (response) {
         let responseValue = JSON.parse(response)[username]
         if (responseValue === 'taken') {
             addMessage(referenceNode, "validation-message", "Nazwa użytkownika " + username + " jest zajęta")
+            resolve("invalid")
         }
-        isUsernameValid = true;
+        resolve("valid")
     })
+    })
+
 }
 
 function httpGetAsync(theUrl, callback) {
@@ -133,10 +137,10 @@ function validateForm(event) {
     let surname = document.getElementById("lastname");
     let fileInput = document.getElementById("photo");
     let username = document.getElementById("login");
+    isValidUsername(username, username.value). then(result => console.log('result of isvalidusername:'+ result))
     let isNameValid = isValidName(firstname, firstname.id);
     let isSurnameValid = isValidName(surname, surname.id);
     let isPasswordValid = isValidPassword();
-    isValidUsername(username, username.value)
     let isFileValid = isValidFile(fileInput);
     if (!(isNameValid && isSurnameValid && isPasswordValid && isUsernameValid && isFileValid)) {
         console.log('isNameValid'+ isNameValid)
@@ -146,3 +150,5 @@ function validateForm(event) {
         console.log('isFileValid'+ isFileValid)
     }
 }
+//TODO obsluga tego ze login jest pusty
+//TODO
