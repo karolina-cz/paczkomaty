@@ -17,9 +17,7 @@ document.getElementById('firstname').addEventListener('change', function (e) {
 document.getElementById('login').addEventListener('keydown', function (e) {
     if (e.keyCode === 8) {
         let username = e.target.value.slice(0, -1);
-        if (username !== '') {
-            isValidUsername(e.target, username)
-        }
+        isValidUsername(e.target, username)
     }
 })
 
@@ -41,15 +39,16 @@ function isValidUsername(referenceNode, username) {
     removeMessages([referenceNode.id]);
     return new Promise(resolve => {
         if (username !== '') {
-            httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username, function (response) {
-                let responseValue = JSON.parse(response)[username]
-                if (responseValue === 'taken') {
-                    addMessage(referenceNode, "Nazwa użytkownika " + username + " jest zajęta")
-                    resolve("invalid")
-                } else {
-                    resolve("valid")
-                }
-            })
+            httpGetAsync('https://infinite-hamlet-29399.herokuapp.com/check/' + username,
+                function (response) {
+                    let responseValue = JSON.parse(response)[username]
+                    if (responseValue === 'taken') {
+                        addMessage(referenceNode, "Nazwa użytkownika " + username + " jest zajęta")
+                        resolve("invalid")
+                    } else {
+                        resolve("valid")
+                    }
+                })
         } else {
             addMessage(referenceNode, REQUIRED_FIELD_MESSAGE)
             resolve("invalid")
