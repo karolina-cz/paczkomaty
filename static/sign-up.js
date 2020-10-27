@@ -46,12 +46,11 @@ function isValidUsername(referenceNode, username) {
                 if (responseValue === 'taken') {
                     addMessage(referenceNode, "Nazwa użytkownika " + username + " jest zajęta")
                     resolve("invalid")
-                }
-                else{
+                } else {
                     resolve("valid")
                 }
             })
-        }else{
+        } else {
             addMessage(referenceNode, REQUIRED_FIELD_MESSAGE)
             resolve("invalid")
         }
@@ -82,7 +81,7 @@ function isValidFile(referenceNode) {
         return true;
     }
     addMessage(referenceNode.parentNode.parentNode,
-                REQUIRED_FIELD_MESSAGE);
+        REQUIRED_FIELD_MESSAGE);
     return false;
 }
 
@@ -97,8 +96,8 @@ function isValidName(referenceNode, referenceNodeId) {
         addMessage(referenceNode, "To pole musi zawierać tylko litery")
         return false;
     }
-    if(!isFirstCharUpperLetter(name)){
-        addMessage(referenceNode,  "To pole musi zaczynać się od dużej litery")
+    if (!isFirstCharUpperLetter(name)) {
+        addMessage(referenceNode, "To pole musi zaczynać się od dużej litery")
         return false;
     }
     return true;
@@ -168,8 +167,5 @@ function validateForm(event) {
         })
 }
 
-
-// TODO strona glowna
 // todo warunki na haslo
-// todo const dla to pole musi byc uzupelnione
 // todo obejrzec czy post ma przenosic na strone
