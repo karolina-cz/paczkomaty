@@ -36,54 +36,58 @@
             </div>
         </div>
     </nav>
-    <div class="form-wrapper">
-        <form>
-            <h3 class="text-center mb-5">Zarejestruj się</h3>
-            <div class="row">
-                <div class="col-sm m-3">
-                    <div class="form-group">
-                        <label for="firstname">Imię</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="Imię">
+    <div class="row justify-content-center align-items-center mb-5">
+        <div class="form-wrapper">
+            <form action="https://infinite-hamlet-29399.herokuapp.com/sender/register" method="POST">
+                <h3 class="text-center mb-3">Zarejestruj się</h3>
+                <div class="row">
+                    <div class="col-sm ">
+                        <div class="form-group">
+                            <label for="firstname">Imię</label>
+                            <input type="text" class="form-control" id="firstname" placeholder="Imię">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Nazwisko</label>
+                            <input type="text" class="form-control" id="lastname" placeholder="Nazwisko">
+                        </div>
+                        <div class="form-group">
+                            <label for="sex">Wybierz płeć</label>
+                            <select name="sex" id="sex" class="form-control">
+                                <option value="F">Kobieta</option>
+                                <option value="M">Mężczyzna</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="login">Nazwa użytkownika</label>
+                            <input type="text" class="form-control" id="login" placeholder="Nazwa użytkownika">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="lastname">Nazwisko</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="Nazwisko">
-                    </div>
-                    <div class="form-group">
-                        <label for="sex">Wybierz płeć</label>
-                        <select id="sex" class="form-control">
-                            <option>Kobieta</option>
-                            <option>Mężczyzna</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="login">Nazwa użytkownika</label>
-                        <input type="text" class="form-control" id="login" placeholder="Nazwa użytkownika">
-                    </div>
-                </div>
-                <div class="col-sm m-3">
+                    <div class="col-sm ">
 
-                    <div class="form-group">
-                        <label for="password">Hasło</label>
-                        <input type="password" class="form-control" id="password" placeholder="Imię">
-                    </div>
-                    <div class="form-group">
-                        <label for="repeated-password">Powtórz hasło</label>
-                        <input type="password" class="form-control" id="repeated-password" placeholder="Powtórz hasło">
-                    </div>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input cursor-pointer" id="photo"
-                                   aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="photo">Choose file</label>
+                        <div class="form-group">
+                            <label for="password">Hasło</label>
+                            <input type="password" class="form-control" id="password" placeholder="Imię">
+                        </div>
+                        <div class="form-group">
+                            <label for="repeated-password">Powtórz hasło</label>
+                            <input type="password" class="form-control" id="repeated-password"
+                                   placeholder="Powtórz hasło">
+                        </div>
+                        <label>Zdjęcie</label>
+                        <div class="input-group">
+                            <div id="pass-wrapper" class="custom-file">
+                                <input type="file" class="custom-file-input cursor-pointer" id="photo"
+                                       aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="photo">Wybierz plik</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-center align-items-center mt-5">
-                <button type="submit" class="btn btn-dark">Zatwierdź</button>
-            </div>
-        </form>
+                <div class="row justify-content-center align-items-center mt-3">
+                    <button type="submit" class="btn btn-dark">Zatwierdź</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <footer class="page-footer fixed-bottom font-small blue bg-light">

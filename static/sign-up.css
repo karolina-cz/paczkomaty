@@ -1,10 +1,23 @@
 .form-wrapper{
     margin: 50px;
     padding: 50px;
+    width:50%;
     border-width: thin;
     border-style: solid;
 }
 
 .cursor-pointer{
     cursor: pointer;
+}
+.validation-message {
+    font-size: 12px;
+  color: red;
+  text-align: center;
+}
+
+.confirmation-message {
+  margin-top:15px;
+  font-size: 17px;
+  color: green;
+  text-align: center;
 }
